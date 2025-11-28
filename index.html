@@ -2,10 +2,9 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <title>No title</title>
+    <title>KATO Hayate - Profile & Portfolio</title>
     <meta content="width=device-width,initial-scale=1,shrink-to-fit=no,viewport-fit=cover" name="viewport">
-    <meta name="robots" content="noindex">
-    <meta http-equiv="refresh" content="0;url=https://github.com/hayatek-jp">
+    <meta name="description" content="加藤疾風のポートフォリオサイト。IT、情報セキュリティ、プログラミングの専門家。">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NZWPHJ6QS"></script>
     <script>
@@ -14,8 +13,697 @@
       gtag('js', new Date());
       gtag('config', 'G-8NZWPHJ6QS');
     </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #111111;
+            --text-color: #e0e0e0;
+            --accent-green: #00ff41;
+            --accent-blue: #0080ff;
+            --border-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0 40px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image:
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 0 15px;
+            }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 80px 0;
+            background: #000;
+            border-bottom: 2px solid var(--accent-green);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 45%, var(--accent-blue) 50%, transparent 55%);
+            opacity: 0.1;
+            background-size: 200% 200%;
+            animation: shine 10s infinite linear;
+        }
+        @keyframes shine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        header h1 {
+            margin: 0;
+            font-size: 4em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+        header p {
+            font-size: 1.2em;
+            margin: 10px 0 0;
+            color: var(--accent-blue);
+            font-family: 'Fira Code', monospace;
+        }
+        .intro {
+            padding: 60px 0;
+            text-align: center;
+        }
+        .intro h2 {
+            color: var(--accent-green);
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #333;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .lucky-section {
+            text-align: center;
+            padding: 40px 0;
+        }
+        .lucky-section h3 {
+            color: var(--accent-green);
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+        #lucky-btn {
+            background: transparent;
+            color: var(--accent-blue);
+            border: 2px solid var(--accent-blue);
+            padding: 15px 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+            font-family: 'Fira Code', monospace;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        #lucky-btn:hover {
+            background: var(--accent-blue);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 128, 255, 0.5);
+        }
+        .sns-links, .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+        @media (max-width: 768px) {
+            .sns-links, .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .sns-card, .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent-green);
+            padding: 25px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text-color);
+            display: block;
+            position: relative;
+        }
+        .sns-card:hover, .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            border-left-color: var(--accent-blue);
+            box-shadow: 0 5px 15px rgba(0, 128, 255, 0.2);
+        }
+        .sns-card .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: var(--accent-green);
+            transition: color 0.3s;
+        }
+        .sns-card:hover .icon {
+            color: var(--accent-blue);
+        }
+        .sns-card h3, .project-card h3 {
+            margin: 0 0 10px;
+            color: #fff;
+            font-size: 1.4em;
+        }
+        .sns-card p, .project-card p {
+            margin: 0;
+            font-size: 0.95em;
+            color: #aaa;
+        }
+        .projects {
+            padding: 60px 0;
+        }
+        .projects h2 {
+            text-align: center;
+            color: var(--accent-green);
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+        }
+        .project-card ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 15px 0 0;
+        }
+        .project-card li {
+            display: inline-block;
+            background: rgba(0, 128, 255, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+            padding: 2px 8px;
+            margin: 2px;
+            font-size: 0.8em;
+            font-family: 'Fira Code', monospace;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            background: #000;
+            color: #666;
+            border-top: 1px solid #333;
+            font-size: 0.9em;
+        }
+        .fira-code-mono {
+            font-family: "Fira Code", monospace;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+        #openpgp {
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        #openpgp:hover {
+            color: var(--accent-green);
+        }
+        .openpgp-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent-green);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            position: relative;
+        }
+        .openpgp-info {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--accent-green);
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 0.9em;
+            display: none;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .openpgp-info::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid var(--accent-green);
+        }
+        #openpgp:hover + .openpgp-info {
+            display: block;
+        }
+        .openpgp-info p {
+            margin: 5px 0;
+            color: #ccc;
+        }
+        .openpgp-info i {
+            margin-right: 8px;
+            color: var(--accent-green);
+        }
+        a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: var(--accent-green);
+        }
+        /* Scrollbar Customization */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        #scroll-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--accent-green);
+            border-radius: 5px;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        #scroll-to-top {
+            background: transparent;
+            border: none;
+            border-right: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #scroll-to-top:hover {
+            background: var(--accent-green);
+            color: #000;
+        }
+        #scroll-indicator {
+            padding: 8px 12px;
+            color: var(--accent-green);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            min-width: 45px;
+            text-align: center;
+        }
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .boot-log {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            color: #ccc;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            width: 100%;
+        }
+        .log-line {
+            display: block;
+        }
+        .log-timestamp {
+            color: var(--accent-green);
+            margin-right: 10px;
+        }
+        .log-message {
+            color: #e0e0e0;
+        }
+        .log-success {
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+        .log-info {
+            color: var(--accent-blue);
+        }
+        .log-warning {
+            color: #ffcc00;
+        }
+        .log-error {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        .log-progress-container {
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        .progress-bar-wrapper {
+            display: flex;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+            color: var(--accent-green);
+        }
+        .progress-label {
+            margin-right: 10px;
+        }
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 20px;
+            background: #333;
+            border: 1px solid var(--accent-green);
+            position: relative;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--accent-green);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .progress-percent {
+            margin-left: 10px;
+            min-width: 40px;
+            text-align: right;
+        }
+    </style>
   </head>
   <body>
-    <h1>製作中</h1>
+    <div id="loading-screen">
+        <div class="boot-log" id="boot-log"></div>
+        <div class="log-progress-container" id="progress-container" style="display: none;">
+            <div class="progress-bar-wrapper">
+                <span class="progress-label">Starting...</span>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+                <span class="progress-percent" id="progress-text">0%</span>
+            </div>
+        </div>
+    </div>
+    <header>
+        <div class="container">
+            <h1>KATO Hayate</h1>
+            <p>IT Engineer | Information Security Specialist</p>
+        </div>
+    </header>
+    <section class="intro">
+        <div class="container">
+            <h2>About Me</h2>
+            <p>中京大学工学部情報工学科 1年</p>
+            <p>プログラミングサークルTerminal所属</p>
+            <p class="fira-code-mono">Email: <a id="email-link" href=""></a></p>
+            <div class="openpgp-section">
+                <p class="fira-code-mono" id="openpgp">OpenPGP Fingerprint: 5039 8D9E 398C 203E 5E49 7EE2 D0C9 1640 0F33 2A0E</p>
+                <div class="openpgp-info">
+                    <p><i class="fas fa-key"></i> Available via WKD</p>
+                    <p><i class="fas fa-server"></i> Available on keys.openpgp.org</p>
+                </div>
+            </div>
+            <p>情報処理安全確保支援士<br>(登録番号 <a href="https://riss.ipa.go.jp/r?r=030898" target="_blank">第030898号</a>)</p>
+            <!--<p><a href="/res/hayatek.vcf">Download vCard</a></p>-->
+        </div>
+    </section>
+    <section class="lucky-section">
+        <h3>SOCIAL</h3>
+        <button id="lucky-btn">I'm Feeling Lucky</button>
+    </section>
+    <section class="sns-links" id="sns-links">
+        <!-- SNS cards will be generated here -->
+    </section>
+    <section class="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            <div class="project-grid" id="project-grid">
+                <!-- Project cards will be generated here -->
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <p>© 2025 KATO Hayate. All rights reserved.</p>
+        </div>
+    </footer>
+    <div id="scroll-control">
+        <button id="scroll-to-top" aria-label="Scroll to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div id="scroll-indicator">0%</div>
+    </div>
+    <script>
+        const snsData = [
+            {
+                name: 'GitHub',
+                url: 'https://github.com/hayatek-jp',
+                icon: 'fab fa-github',
+                color: '#333',
+                description: '',
+            },
+            {
+                name: 'Twitter',
+                url: 'https://twitter.com/hayatek_jp',
+                icon: 'fab fa-twitter',
+                color: '#1da1f2',
+                description: '',
+            },
+            {
+                name: 'Wakatime',
+                url: 'https://wakatime.com/@hayatek_jp',
+                icon: 'fab fa-wakatime',
+                color: '#f4f5f7',
+                description: '',
+            },
+            {
+                name: 'Discord',
+                url: 'https://discord.com/users/1375405114503987241',
+                icon: 'fab fa-discord',
+                color: '#5865f2',
+                description: '',
+            }
+        ];
+
+        const projects = [
+            // Add project objects here, e.g.:
+            // { title: 'Project Title', description: 'Description', technologies: ['Tech1', 'Tech2'], team: 'Solo', repoUrl: 'https://github.com/...', url: 'https://...' }
+            {
+                title: 'ChukyoLink',
+                description: '中京大学の学生向けWebアプリ',
+                technologies: ['React', 'Next.js', 'Hono'],
+                team: '2人',
+                url: 'https://chukyo.link/'
+            },
+            {
+                title: 'Terminal公式サイト',
+                description: '中京大学プログラミングサークルTerminalの公式サイト',
+                technologies: ['React', 'Next.js'],
+                url: 'https://chukyo-terminal.com/'
+            }
+        ];
+
+        const snsLinksContainer = document.getElementById('sns-links');
+        snsData.forEach(sns => {
+            const card = document.createElement('a');
+            card.href = sns.url;
+            card.className = 'sns-card';
+            card.target = '_blank';
+            card.innerHTML = `
+                <i class="${sns.icon}" style="color: ${sns.color};"></i>
+                <h3 style="color: ${sns.color};">${sns.name}</h3>
+                <p>${sns.description}</p>
+            `;
+            snsLinksContainer.appendChild(card);
+        });
+
+        const projectGrid = document.getElementById('project-grid');
+        projects.forEach(project => {
+            const card = document.createElement('a');
+            card.href = project.url;
+            card.className = 'project-card';
+            card.target = '_blank';
+            const techList = project.technologies ? project.technologies.map(tech => `<li>${tech}</li>`).join('') : '';
+            card.innerHTML = `
+                <h3>${project.title}</h3>
+                <p>${project.description}</p>
+                ${techList ? `<p><strong>使用技術:</strong></p><ul>${techList}</ul>` : ''}
+                ${project.team ? `<p><strong>開発体制:</strong> ${project.team}</p>` : ''}
+                ${project.repoUrl ? `<p><strong>リポジトリ:</strong> <a href="${project.repoUrl}" target="_blank">${project.repoUrl}</a></p>` : ''}
+            `;
+            projectGrid.appendChild(card);
+        });
+
+        document.getElementById('lucky-btn').addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * snsData.length);
+            window.open(snsData[randomIndex].url, '_blank');
+        });
+
+        // Decode and display email
+        const emailDecoded = atob('Y29udGFjdEBoYXlhdGVrLmpw');
+        const emailLink = document.getElementById('email-link');
+        emailLink.href = `mailto:${emailDecoded}`;
+        emailLink.textContent = emailDecoded;
+
+        // Copy OpenPGP to clipboard on click
+        document.getElementById('openpgp').addEventListener('click', () => {
+            navigator.clipboard.writeText('5039 8D9E 398C 203E 5E49 7EE2 D0C9 1640 0F33 2A0E').then(() => {
+                alert('OpenPGP Fingerprint copied to clipboard!');
+            });
+        });
+
+        // Scroll indicator & To Top Button
+        const scrollIndicator = document.getElementById('scroll-indicator');
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+
+        function updateScrollIndicator() {
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.body.scrollHeight;
+            const scrollPercent = Math.round((scrollTop + windowHeight) / documentHeight * 100);
+            scrollIndicator.textContent = scrollPercent + '%';
+        }
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        window.addEventListener('scroll', updateScrollIndicator);
+        updateScrollIndicator(); // Initial call
+
+        // Boot log animation
+        const bootLog = document.getElementById('boot-log');
+        const progressContainer = document.getElementById('progress-container');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+
+        const logMessages = [
+            { msg: "Initializing kernel...", type: "info" },
+            { msg: "Loading modules...", type: "info" },
+            { msg: "Detected CPU: Quantum Core i9-9990K @ 5.00GHz", type: "info" },
+            { msg: "Memory: 128GB DDR5 RAM OK", type: "info" },
+            { msg: "Mounting file systems...", type: "success" },
+            { msg: "Checking disk integrity...", type: "info" },
+            { msg: "/dev/sda1: clean, 512/1024 files, 2048/4096 blocks", type: "info" },
+            { msg: "Starting network services...", type: "info" },
+            { msg: "Connected to eth0: 192.168.1.100", type: "success" },
+            { msg: "Checking security protocols...", type: "info" },
+            { msg: "Firewall enabled. Rules updated.", type: "success" },
+            { msg: "Loading user interface...", type: "info" },
+            { msg: "Starting X server...", type: "info" },
+            { msg: "Establishing secure connection...", type: "success" },
+            { msg: "Verifying identity...", type: "success" },
+            { msg: "Loading portfolio data...", type: "info" },
+            { msg: "Fetching assets from CDN...", type: "info" },
+            { msg: "Compiling stylesheets...", type: "info" },
+            { msg: "Executing scripts...", type: "info" },
+            { msg: "System ready.", type: "success" },
+            { msg: "Welcome to KATO Hayate's website.", type: "success" }
+        ];
+
+        let logIndex = 0;
+
+        function startProgressBar() {
+            progressContainer.style.display = 'block';
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        const loadingScreen = document.getElementById('loading-screen');
+                        loadingScreen.classList.add('hidden');
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 500);
+                    }, 500);
+                } else {
+                    width += Math.random() * 5;
+                    if (width > 100) width = 100;
+                    progressFill.style.width = width + '%';
+                    progressText.textContent = Math.floor(width) + '%';
+                }
+            }, 50);
+        }
+
+        function addLogLine() {
+            // Randomly inject error or warning (low probability)
+            if (Math.random() < 0.05 && logIndex > 2 && logIndex < logMessages.length - 2) {
+                const isError = Math.random() < 0.3;
+                const type = isError ? 'error' : 'warning';
+                const msg = isError ? "CRITICAL ERROR: Kernel panic - not syncing: VFS: Unable to mount root fs" : "WARNING: CPU temperature high";
+
+                const line = document.createElement('div');
+                line.className = 'log-line';
+                const timestamp = document.createElement('span');
+                timestamp.className = 'log-timestamp';
+                timestamp.textContent = `[ ${(performance.now() / 1000).toFixed(6)} ]`;
+                const message = document.createElement('span');
+                message.className = `log-message log-${type}`;
+                message.textContent = msg;
+                line.appendChild(timestamp);
+                line.appendChild(message);
+                bootLog.appendChild(line);
+
+                if (isError) {
+                    setTimeout(() => {
+                        bootLog.innerHTML = ''; // Clear log
+                        logIndex = 0; // Reset
+                        addLogLine(); // Restart
+                    }, 2000);
+                    return; // Stop current execution
+                }
+            }
+
+            if (logIndex < logMessages.length) {
+                const log = logMessages[logIndex];
+                const line = document.createElement('div');
+                line.className = 'log-line';
+
+                const timestamp = document.createElement('span');
+                timestamp.className = 'log-timestamp';
+                timestamp.textContent = `[ ${(performance.now() / 1000).toFixed(6)} ]`;
+
+                const message = document.createElement('span');
+                message.className = `log-message ${log.type === 'success' ? 'log-success' : (log.type === 'info' ? 'log-info' : '')}`;
+                message.textContent = log.msg;
+
+                line.appendChild(timestamp);
+                line.appendChild(message);
+                bootLog.appendChild(line);
+
+                logIndex++;
+                const delay = Math.random() * 100 + 20; // Faster logs
+                if (logIndex < logMessages.length) {
+                    setTimeout(addLogLine, delay);
+                } else {
+                    // Logs finished, start progress bar
+                    setTimeout(startProgressBar, 200);
+                }
+            }
+        }        // Start log animation
+        addLogLine();
+
+        // Remove the fixed timeout logic, rely on animation completion
+    </script>
   </body>
 </html>
