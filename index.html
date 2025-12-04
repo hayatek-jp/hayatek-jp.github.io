@@ -363,6 +363,23 @@
             color: var(--accent-green);
             font-size: 1.2em;
         }
+        /* Stronger grid overlay for main content area */
+        .main-content {
+            background-image:
+                linear-gradient(rgba(0, 255, 65, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.06) 1px, transparent 1px);
+            background-size: 20px 20px;
+            /* Subtle blend so it doesn't interfere with section cards */
+            background-blend-mode: overlay;
+        }
+        @media (max-width: 600px) {
+            .main-content {
+                background-image:
+                    linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+                background-size: 20px 20px;
+            }
+        }
     </style>
   </head>
   <body>
@@ -378,38 +395,40 @@
             <p>IT Engineer | Information Security Specialist</p>
         </div>
     </header>
-    <section class="intro">
-        <div class="container">
-            <h2>About Me</h2>
-            <p>中京大学工学部情報工学科 1年</p>
-            <p>プログラミングサークルTerminal所属</p>
-            <p class="fira-code-mono">Email: <a id="email-link" href=""></a></p>
-            <div class="openpgp-section">
-                <p class="fira-code-mono" id="openpgp">OpenPGP Fingerprint: 5039 8D9E 398C 203E 5E49 7EE2 D0C9 1640 0F33 2A0E</p>
-                <div class="openpgp-info">
-                    <p><i class="fas fa-key"></i> Available via WKD</p>
-                    <p><i class="fas fa-server"></i> Available on keys.openpgp.org</p>
+    <main class="main-content">
+        <section class="intro">
+            <div class="container">
+                <h2>About Me</h2>
+                <p>中京大学工学部情報工学科 1年</p>
+                <p>プログラミングサークルTerminal所属</p>
+                <p class="fira-code-mono">Email: <a id="email-link" href=""></a></p>
+                <div class="openpgp-section">
+                    <p class="fira-code-mono" id="openpgp">OpenPGP Fingerprint: 5039 8D9E 398C 203E 5E49 7EE2 D0C9 1640 0F33 2A0E</p>
+                    <div class="openpgp-info">
+                        <p><i class="fas fa-key"></i> Available via WKD</p>
+                        <p><i class="fas fa-server"></i> Available on keys.openpgp.org</p>
+                    </div>
+                </div>
+                <p>情報処理安全確保支援士<br>(登録番号 <a href="https://riss.ipa.go.jp/r?r=030898" target="_blank">第030898号</a>)</p>
+                <!--<p><a href="/res/hayatek.vcf">Download vCard</a></p>-->
+            </div>
+        </section>
+        <section class="lucky-section">
+            <h3>SOCIAL</h3>
+            <button id="lucky-btn">I'm Feeling Lucky</button>
+        </section>
+        <section class="sns-links" id="sns-links">
+            <!-- SNS cards will be generated here -->
+        </section>
+        <section class="projects">
+            <div class="container">
+                <h2>Projects</h2>
+                <div class="project-grid" id="project-grid">
+                    <!-- Project cards will be generated here -->
                 </div>
             </div>
-            <p>情報処理安全確保支援士<br>(登録番号 <a href="https://riss.ipa.go.jp/r?r=030898" target="_blank">第030898号</a>)</p>
-            <!--<p><a href="/res/hayatek.vcf">Download vCard</a></p>-->
-        </div>
-    </section>
-    <section class="lucky-section">
-        <h3>SOCIAL</h3>
-        <button id="lucky-btn">I'm Feeling Lucky</button>
-    </section>
-    <section class="sns-links" id="sns-links">
-        <!-- SNS cards will be generated here -->
-    </section>
-    <section class="projects">
-        <div class="container">
-            <h2>Projects</h2>
-            <div class="project-grid" id="project-grid">
-                <!-- Project cards will be generated here -->
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
     <footer>
         <div class="container">
             <p>© 2025 KATO Hayate. All rights reserved.</p>
