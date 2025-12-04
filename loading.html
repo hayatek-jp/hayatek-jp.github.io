@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Loading Screen (extracted)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #000;
+      --accent-green: #00ff41;
+      --accent-blue: #0080ff;
+    }
+    body { background: #000; color: #ddd; font-family: 'Fira Code', monospace; padding: 20px; }
+    /* Loading Screen styles (extracted) */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      z-index: 9999;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .boot-log {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      color: #ccc;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      width: 100%;
+    }
+    .log-line { display: block; }
+    .log-timestamp { color: var(--accent-green); margin-right: 10px; }
+    .log-message { color: #e0e0e0; }
+    .log-success { color: var(--accent-green); font-weight: bold; }
+    .log-info { color: var(--accent-blue); }
+    .log-warning { color: #ffcc00; }
+    .log-error { color: #ff0000; font-weight: bold; }
+
+    .log-progress-container { width: 80%; max-width: 600px; margin-top: 20px; }
+    .progress-bar-wrapper { display: flex; align-items: center; font-family: 'Fira Code', monospace; color: var(--accent-green); }
+    .progress-label { margin-right: 10px; }
+    .progress-bar-bg { flex-grow: 1; height: 20px; background: #333; border: 1px solid var(--accent-green); position: relative; }
+    .progress-bar-fill { height: 100%; background: var(--accent-green); width: 0%; transition: width 0.1s linear; }
+    .progress-percent { margin-left: 10px; min-width: 40px; text-align: right; }
+  </style>
+</head>
+<body>
+  <!-- Extracted loading screen from index.html -->
+  <div id="loading-screen">
+    <div class="boot-log" id="boot-log"></div>
+    <div class="log-progress-container" id="progress-container" style="display: none;">
+      <div class="progress-bar-wrapper">
+        <span class="progress-label">Starting...</span>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-percent" id="progress-text">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Boot log animation (extracted)
+    const bootLog = document.getElementById('boot-log');
+    const progressContainer = document.getElementById('progress-container');
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+
+    const logMessages = [
+      { msg: "Initializing kernel...", type: "info" },
+      { msg: "Loading modules...", type: "info" },
+      { msg: "Detected CPU: Quantum Core i9-9990K @ 5.00GHz", type: "info" },
+      { msg: "Memory: 128GB DDR5 RAM OK", type: "info" },
+      { msg: "Mounting file systems...", type: "success" },
+      { msg: "Checking disk integrity...", type: "info" },
+      { msg: "/dev/sda1: clean, 512/1024 files, 2048/4096 blocks", type: "info" },
+      { msg: "Starting network services...", type: "info" },
+      { msg: "Connected to eth0: 192.168.1.100", type: "success" },
+      { msg: "Checking security protocols...", type: "info" },
+      { msg: "Firewall enabled. Rules updated.", type: "success" },
+      { msg: "Loading user interface...", type: "info" },
+      { msg: "Starting X server...", type: "info" },
+      { msg: "Establishing secure connection...", type: "success" },
+      { msg: "Verifying identity...", type: "success" },
+      { msg: "Loading portfolio data...", type: "info" },
+      { msg: "Fetching assets from CDN...", type: "info" },
+      { msg: "Compiling stylesheets...", type: "info" },
+      { msg: "Executing scripts...", type: "info" },
+      { msg: "System ready.", type: "success" },
+      { msg: "Welcome to KATO Hayate's website.", type: "success" }
+    ];
+
+    let logIndex = 0;
+
+    function startProgressBar() {
+      progressContainer.style.display = 'block';
+      let width = 0;
+      const interval = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            const loadingScreen = document.getElementById('loading-screen');
+            loadingScreen.style.display = 'none';
+          }, 500);
+        } else {
+          width += Math.random() * 5;
+          if (width > 100) width = 100;
+          progressFill.style.width = width + '%';
+          progressText.textContent = Math.floor(width) + '%';
+        }
+      }, 50);
+    }
+
+    function addLogLine() {
+      // Randomly inject error or warning (low probability)
+      if (Math.random() < 0.05 && logIndex > 2 && logIndex < logMessages.length - 2) {
+        const isError = Math.random() < 0.3;
+        const type = isError ? 'error' : 'warning';
+        const msg = isError ? "CRITICAL ERROR: Kernel panic - not syncing: VFS: Unable to mount root fs" : "WARNING: CPU temperature high";
+
+        const line = document.createElement('div');
+        line.className = 'log-line';
+        const timestamp = document.createElement('span');
+        timestamp.className = 'log-timestamp';
+        timestamp.textContent = `[ ${(performance.now() / 1000).toFixed(6)} ]`;
+        const message = document.createElement('span');
+        message.className = `log-message log-${type}`;
+        message.textContent = msg;
+        line.appendChild(timestamp);
+        line.appendChild(message);
+        bootLog.appendChild(line);
+
+        if (isError) {
+          setTimeout(() => {
+            bootLog.innerHTML = ''; // Clear log
+            logIndex = 0; // Reset
+            addLogLine(); // Restart
+          }, 2000);
+          return; // Stop current execution
+        }
+      }
+
+      if (logIndex < logMessages.length) {
+        const log = logMessages[logIndex];
+        const line = document.createElement('div');
+        line.className = 'log-line';
+
+        const timestamp = document.createElement('span');
+        timestamp.className = 'log-timestamp';
+        timestamp.textContent = `[ ${(performance.now() / 1000).toFixed(6)} ]`;
+
+        const message = document.createElement('span');
+        message.className = `log-message ${log.type === 'success' ? 'log-success' : (log.type === 'info' ? 'log-info' : '')}`;
+        message.textContent = log.msg;
+
+        line.appendChild(timestamp);
+        line.appendChild(message);
+        bootLog.appendChild(line);
+
+        logIndex++;
+        const delay = Math.random() * 100 + 20;
+        if (logIndex < logMessages.length) {
+          setTimeout(addLogLine, delay);
+        } else {
+          setTimeout(startProgressBar, 200);
+        }
+      }
+    }
+
+    // Start
+    addLogLine();
+  </script>
+</body>
+</html>
