@@ -374,12 +374,21 @@
         }
         /* Stronger grid overlay for main content area */
         .main-content {
-            background-image:
-                linear-gradient(rgba(0, 255, 65, 0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 65, 0.06) 1px, transparent 1px);
-            background-size: 20px 20px;
-            /* Subtle blend so it doesn't interfere with section cards */
-            background-blend-mode: overlay;
+            position: relative;
+            /* Grid is now drawn via Canvas */
+        }
+        #grid-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .main-content > * {
+            position: relative;
+            z-index: 1;
         }
         @media (max-width: 600px) {
             .main-content {
@@ -405,6 +414,7 @@
         </div>
     </header>
     <main class="main-content">
+        <canvas id="grid-canvas"></canvas>
         <section class="intro">
             <div class="container">
                 <h2>About Me</h2>
@@ -610,6 +620,155 @@
 
         // Start loading immediately
         startLoading();
+
+        // Grid Animation with Random Beams
+        const canvas = document.getElementById('grid-canvas');
+        const ctx = canvas.getContext('2d');
+        const gridSize = 30; // Match background-size logic roughly
+        let beams = [];
+
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Beam {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize;
+                this.y = Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize;
+
+                // Random initial direction
+                const isHorizontal = Math.random() > 0.5;
+                if (isHorizontal) {
+                    this.vx = (Math.random() * 10 + 10) * (Math.random() > 0.5 ? 1 : -1);
+                    this.vy = 0;
+                } else {
+                    this.vx = 0;
+                    this.vy = (Math.random() * 10 + 10) * (Math.random() > 0.5 ? 1 : -1);
+                }
+
+                this.length = Math.random() * 200 + 100;
+                this.trail = [{x: this.x, y: this.y}]; // Start point
+
+                this.opacity = 0;
+                this.life = 0;
+                this.maxLife = Math.random() * 100 + 100;
+            }
+
+            update() {
+                this.life++;
+                if (this.life < 20) {
+                    this.opacity = this.life / 20;
+                } else if (this.life > this.maxLife - 20) {
+                    this.opacity = (this.maxLife - this.life) / 20;
+                } else {
+                    this.opacity = 1;
+                }
+
+                if (this.life >= this.maxLife) {
+                    this.reset();
+                    return;
+                }
+
+                // Move
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Random turn (e.g., 5% chance per frame)
+                if (Math.random() < 0.05) {
+                    // Snap to grid to ensure clean turns
+                    if (this.vx !== 0) { // Moving horizontally
+                        this.x = Math.round(this.x / gridSize) * gridSize;
+                    } else { // Moving vertically
+                        this.y = Math.round(this.y / gridSize) * gridSize;
+                    }
+
+                    // Add corner to trail
+                    this.trail.unshift({x: this.x, y: this.y});
+
+                    // Change direction
+                    if (this.vx !== 0) {
+                        this.vx = 0;
+                        this.vy = (Math.random() * 10 + 10) * (Math.random() > 0.5 ? 1 : -1);
+                    } else {
+                        this.vx = (Math.random() * 10 + 10) * (Math.random() > 0.5 ? 1 : -1);
+                        this.vy = 0;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(0, 255, 65, ${this.opacity})`;
+                ctx.lineWidth = 2;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#00ff41';
+
+                ctx.moveTo(this.x, this.y);
+
+                let currentX = this.x;
+                let currentY = this.y;
+                let remainingLen = this.length;
+
+                for (let point of this.trail) {
+                    const dist = Math.hypot(point.x - currentX, point.y - currentY);
+
+                    if (dist <= remainingLen) {
+                        ctx.lineTo(point.x, point.y);
+                        remainingLen -= dist;
+                        currentX = point.x;
+                        currentY = point.y;
+                    } else {
+                        const ratio = remainingLen / dist;
+                        const endX = currentX + (point.x - currentX) * ratio;
+                        const endY = currentY + (point.y - currentY) * ratio;
+                        ctx.lineTo(endX, endY);
+                        remainingLen = 0;
+                        break;
+                    }
+                }
+
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            }
+        }        // Initialize beams
+        for(let i=0; i<8; i++) {
+            beams.push(new Beam());
+        }
+
+        function animateGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw base grid
+            ctx.strokeStyle = 'rgba(0, 255, 65, 0.06)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+
+            for (let y = 0; y <= canvas.height; y += gridSize) {
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+            }
+            for (let x = 0; x <= canvas.width; x += gridSize) {
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+            }
+            ctx.stroke();
+
+            // Draw beams
+            beams.forEach(beam => {
+                beam.update();
+                beam.draw();
+            });
+
+            requestAnimationFrame(animateGrid);
+        }
+        animateGrid();
     </script>
   </body>
 </html>
