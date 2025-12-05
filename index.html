@@ -116,6 +116,15 @@
             margin-bottom: 40px;
             font-weight: 700;
         }
+        .sns-title {
+            color: var(--accent-green);
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-align: center;
+        }
         #lucky-btn {
             background: transparent;
             color: var(--accent-blue);
@@ -414,9 +423,9 @@
             </div>
         </section>
         <section class="lucky-section">
-            <h3>SOCIAL</h3>
             <button id="lucky-btn">I'm Feeling Lucky</button>
         </section>
+        <h2 class="sns-title">SOCIAL</h2>
         <section class="sns-links" id="sns-links">
             <!-- SNS cards will be generated here -->
         </section>
@@ -522,8 +531,17 @@
         });
 
         document.getElementById('lucky-btn').addEventListener('click', () => {
-            const randomIndex = Math.floor(Math.random() * snsData.length);
-            window.open(snsData[randomIndex].url, '_blank');
+            const targets = [];
+            // Add SNS targets
+            snsData.forEach(s => { if (s.url) targets.push({ url: s.url, label: s.name }); });
+            // Add project targets (site and repo if present)
+            projects.forEach(p => {
+                if (p.url) targets.push({ url: p.url, label: p.title + ' (site)' });
+                if (p.repoUrl) targets.push({ url: p.repoUrl, label: p.title + ' (repo)' });
+            });
+            if (targets.length === 0) return;
+            const pick = targets[Math.floor(Math.random() * targets.length)];
+            window.open(pick.url, '_blank');
         });
 
         // Decode and display email
